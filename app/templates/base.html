@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A focused space to organize coursework, deadlines, and study progress.">
+  <title>{% block title %}StudyFlow{% endblock %} · StudyFlow</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="{% if current_user.is_authenticated %}app-body{% else %}auth-body{% endif %}">
+{% if current_user.is_authenticated %}
+<aside class="sidebar" id="sidebar">
+  <a class="brand" href="{{ url_for('main.dashboard') }}"><span class="brand-mark">S</span><span>studyflow</span></a>
+  <span class="nav-caption">WORKSPACE</span>
+  <nav class="primary-nav" aria-label="Main navigation">
+    <a class="nav-link {% if request.endpoint == 'main.dashboard' %}active{% endif %}" href="{{ url_for('main.dashboard') }}"><span class="nav-icon">⌂</span>Dashboard</a>
+    <a class="nav-link {% if request.endpoint and request.endpoint.startswith('tasks.') %}active{% endif %}" href="{{ url_for('tasks.list_tasks') }}"><span class="nav-icon">▤</span>My tasks</a>
+  </nav>
+  <div class="sidebar-bottom">
+    <div class="profile-chip"><span class="avatar">{{ current_user.name[:1]|upper }}</span><span class="profile-copy"><strong>{{ current_user.name }}</strong><small>{{ current_user.email }}</small></span></div>
+    <form action="{{ url_for('auth.logout') }}" method="post"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button class="nav-link logout-link" type="submit"><span class="nav-icon">↪</span>Sign out</button></form>
+  </div>
+</aside>
+<div class="mobile-bar"><a class="brand" href="{{ url_for('main.dashboard') }}"><span class="brand-mark">S</span><span>studyflow</span></a><button class="menu-toggle" type="button" aria-expanded="false" aria-controls="sidebar" aria-label="Toggle navigation">☰</button></div>
+{% endif %}
+<main class="main-shell {% if not current_user.is_authenticated %}auth-shell{% endif %}">
+  {% with messages = get_flashed_messages(with_categories=true) %}{% if messages %}<div class="flash-stack" role="status" aria-live="polite">{% for category, message in messages %}<div class="flash flash-{{ category }}"><span>{{ message }}</span><button type="button" class="flash-close" aria-label="Dismiss notification">×</button></div>{% endfor %}</div>{% endif %}{% endwith %}
+  {% block content %}{% endblock %}
+</main>
+<script src="{{ url_for('static', filename='js/main.js') }}" defer></script>
+</body>
+</html>

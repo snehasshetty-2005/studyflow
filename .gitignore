@@ -1,0 +1,16 @@
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+.env
+instance/*.db
+instance/*.sqlite*
+*.log
+dist/
+build/
+*.egg-info/
+.DS_Store
+Thumbs.db
