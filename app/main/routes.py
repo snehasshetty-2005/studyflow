@@ -27,7 +27,8 @@ def dashboard():
     total = len(all_tasks)
     upcoming = sorted((t for t in all_tasks if t.status != "Completed" and t.due_date), key=lambda t: t.due_date)[:5]
     recent = sorted(all_tasks, key=lambda t: t.updated_at or t.created_at, reverse=True)[:5]
-    week_start = date.today() - timedelta(days=date.today().weekday())
+    today = date.today()
+    week_start = today - timedelta(days=today.weekday())
     week_counts = []
     for offset in range(7):
         day = week_start + timedelta(days=offset)
@@ -37,5 +38,5 @@ def dashboard():
         "main/dashboard.html", total=total, counts=counts, overdue=overdue,
         completion_rate=round(counts["Completed"] / total * 100) if total else 0,
         upcoming=upcoming, recent=recent, week_counts=week_counts,
-        week_max=max((d["count"] for d in week_counts), default=0),
+        week_max=max((d["count"] for d in week_counts), default=0), today=today,
     )

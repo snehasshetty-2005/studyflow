@@ -6,7 +6,7 @@ from flask import Flask, flash, redirect, render_template, request, url_for
 from flask_login import current_user
 
 from config import Config
-from .extensions import csrf, db, login_manager, migrate
+from .extensions import csrf, db, limiter, login_manager, migrate
 
 
 def create_app(config_object=Config):
@@ -21,6 +21,7 @@ def create_app(config_object=Config):
     migrate.init_app(app, db)
     login_manager.init_app(app)
     csrf.init_app(app)
+    limiter.init_app(app)
 
     from .auth import auth_bp
     from .main import main_bp
@@ -40,6 +41,10 @@ def create_app(config_object=Config):
     @app.errorhandler(404)
     def not_found(_error):
         return render_template("errors/404.html"), 404
+
+    @app.errorhandler(429)
+    def too_many_requests(_error):
+        return render_template("errors/429.html"), 429
 
     @app.errorhandler(500)
     def server_error(error):

@@ -29,7 +29,7 @@ def test_dashboard_metrics_are_user_specific(client, app, create_user):
 def test_empty_dashboard_is_safe(client):
     register(client)
     response = client.get("/dashboard")
-    assert b">0%" in response.data
+    assert b"0 percent of tasks completed" in response.data
     assert b"Create your first task" in response.data
 
 

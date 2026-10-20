@@ -6,7 +6,7 @@ from flask_login import current_user, login_user, logout_user
 from email_validator import EmailNotValidError, validate_email
 from sqlalchemy import func
 
-from ..extensions import db
+from ..extensions import db, limiter
 from ..models import User
 from . import auth_bp
 
@@ -46,6 +46,7 @@ def register():
 
 
 @auth_bp.route("/login", methods=["GET", "POST"])
+@limiter.limit("5 per minute", methods=["POST"])
 def login():
     errors, email = {}, ""
     if request.method == "POST":

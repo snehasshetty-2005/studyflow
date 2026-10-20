@@ -40,6 +40,15 @@ def test_incorrect_login_is_generic(client):
     assert b"Email or password is incorrect" in response.data
 
 
+def test_login_is_rate_limited(app):
+    app.config["RATELIMIT_ENABLED"] = True
+    client = app.test_client()
+    responses = [client.post("/login", data={"email": "student@example.com", "password": "wrong"}) for _ in range(6)]
+    assert all(response.status_code == 200 for response in responses[:5])
+    assert responses[5].status_code == 429
+    assert b"Too many login attempts" in responses[5].data
+
+
 def test_registration_validates_required_fields(client):
     response = client.post("/register", data={"name": "", "email": "not-an-email", "password": "x", "confirm_password": "y"})
     assert b"Enter a name" in response.data

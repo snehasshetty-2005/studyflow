@@ -183,6 +183,7 @@ Local development uses SQLite. Production database choice is intentionally not h
 | `SECRET_KEY` | Yes in production; recommended locally | Signs Flask sessions and CSRF tokens. Keep private and random. |
 | `DATABASE_URL` | No locally; yes when selecting a hosted database | SQLAlchemy connection URL. Defaults to local SQLite at `sqlite:///student_tasks.db` (Flask-SQLAlchemy resolves relative SQLite paths under the instance folder). |
 | `COOKIE_SECURE` | Set to `1` behind HTTPS in production | Adds the Secure attribute to session cookies. Keep `0` for local HTTP development. |
+| `RATELIMIT_STORAGE_URI` | Optional; required for shared counters across app processes | Flask-Limiter storage URL. Defaults to `memory://`, which is process-local and resets on restart. Use a private Redis-compatible URL for multi-process deployments. |
 | `FLASK_APP` | Optional | Example file is `run.py`; CLI examples also pass `--app run.py`. |
 | `FLASK_DEBUG` | Optional | Set to `1` only for local development. Never enable debug mode on a public production server. |
 

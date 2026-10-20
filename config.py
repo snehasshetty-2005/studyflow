@@ -17,6 +17,7 @@ class Config:
     REMEMBER_COOKIE_HTTPONLY = True
     REMEMBER_COOKIE_SAMESITE = "Lax"
     WTF_CSRF_TIME_LIMIT = 3600
+    RATELIMIT_STORAGE_URI = os.environ.get("RATELIMIT_STORAGE_URI", "memory://")
 
     @classmethod
     def validate(cls, app):

@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Please wait{% endblock %}
+{% block content %}
+<section class="error-page">
+  <span class="section-kicker">SLOW DOWN</span>
+  <h1>Too many login attempts</h1>
+  <p>Please wait a minute before trying again.</p>
+  <a class="button button-primary" href="{{ url_for('auth.login') }}">Return to sign in</a>
+</section>
+{% endblock %}

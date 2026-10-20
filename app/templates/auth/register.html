@@ -1,12 +1,24 @@
 {% extends 'base.html' %}
 {% block title %}Create account{% endblock %}
 {% block content %}
-<section class="auth-card"><a class="brand auth-brand" href="{{ url_for('auth.register') }}"><span class="brand-mark">S</span><span>studyflow</span></a><div class="auth-heading"><span class="eyebrow">YOUR STUDY SPACE</span><h1>Make room to focus.</h1><p>Create an account to keep every deadline in view.</p></div>
-<form method="post" class="form-stack"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-<label for="name">Your name</label><input id="name" name="name" autocomplete="name" maxlength="80" required value="{{ values.name }}" placeholder="Alex Morgan">{% if errors.get('name') %}<small class="field-error">{{ errors.name }}</small>{% endif %}
-<label for="email">Email address</label><input id="email" name="email" type="email" autocomplete="email" maxlength="254" required value="{{ values.email }}" placeholder="you@example.com">{% if errors.get('email') %}<small class="field-error">{{ errors.email }}</small>{% endif %}
-<label for="password">Password</label><input id="password" name="password" type="password" autocomplete="new-password" minlength="8" maxlength="128" required placeholder="At least 8 characters">{% if errors.get('password') %}<small class="field-error">{{ errors.password }}</small>{% endif %}
-<label for="confirm_password">Confirm password</label><input id="confirm_password" name="confirm_password" type="password" autocomplete="new-password" required placeholder="Enter it again">{% if errors.get('confirm_password') %}<small class="field-error">{{ errors.confirm_password }}</small>{% endif %}
-<button class="button button-primary button-wide" type="submit">Create account <span aria-hidden="true">→</span></button></form>
-<p class="auth-switch">Already have an account? <a href="{{ url_for('auth.login') }}">Sign in</a></p></section>
+<section class="auth-layout register-layout" aria-label="Create a StudyFlow account">
+  <div class="auth-story">
+    <a class="brand brand-light" href="{{ url_for('auth.register') }}"><span class="brand-mark">S</span><span>studyflow<span class="brand-period">.</span></span></a>
+    <div class="story-copy"><span class="story-kicker"><span></span> A FRESH START</span><h1>Your goals,<br>with room to <em>grow.</em></h1><p>Build a study rhythm that feels clear, focused, and yours.</p></div>
+    <div class="story-art" aria-hidden="true"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="art-spark spark-one">✳</div><div class="art-spark spark-two">✦</div><div class="art-note"><span class="art-note-label">YOUR NEXT CHAPTER</span><strong>Start where<br>you are.</strong><span class="art-note-line"><i></i><i></i><i></i><i></i><i></i></span></div><div class="art-sticker">ONE DAY<br>AT A TIME</div></div>
+    <div class="story-footer"><span>BUILT FOR THE WAY YOU LEARN</span><span>02 — 02</span></div>
+  </div>
+  <div class="auth-form-side"><div class="auth-form-wrap register-form-wrap">
+    <div class="auth-heading"><span class="eyebrow">YOUR STUDY SPACE</span><h2>Let’s get<br>you organized.</h2><p>Create your account. Your plan starts here.</p></div>
+    <form method="post" class="form-stack"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <div class="field-group"><label for="name">Your name</label><input id="name" name="name" autocomplete="name" maxlength="80" required value="{{ values.name }}" placeholder="Alex Morgan">{% if errors.get('name') %}<small class="field-error">{{ errors.name }}</small>{% endif %}</div>
+      <div class="field-group"><label for="email">Email address</label><input id="email" name="email" type="email" autocomplete="email" inputmode="email" maxlength="254" required value="{{ values.email }}" placeholder="you@example.com">{% if errors.get('email') %}<small class="field-error">{{ errors.email }}</small>{% endif %}</div>
+      <div class="field-group"><label for="password">Password</label><div class="password-wrap"><input id="password" name="password" type="password" autocomplete="new-password" minlength="8" maxlength="128" required placeholder="At least 8 characters"><button class="password-toggle" type="button" data-toggle-password="#password" aria-label="Show password">Show</button></div>{% if errors.get('password') %}<small class="field-error">{{ errors.password }}</small>{% else %}<span class="field-hint">Use 8–128 characters.</span>{% endif %}</div>
+      <div class="field-group"><label for="confirm_password">Confirm password</label><input id="confirm_password" name="confirm_password" type="password" autocomplete="new-password" required placeholder="Enter your password again">{% if errors.get('confirm_password') %}<small class="field-error">{{ errors.confirm_password }}</small>{% endif %}</div>
+      <button class="button button-primary button-wide" type="submit">Create my account <span aria-hidden="true">→</span></button>
+    </form>
+    <p class="auth-switch">Already have an account? <a href="{{ url_for('auth.login') }}">Sign in <span aria-hidden="true">↗</span></a></p>
+    <div class="auth-security"><span aria-hidden="true">◆</span> Your study space is private and secure.</div>
+  </div></div>
+</section>
 {% endblock %}
